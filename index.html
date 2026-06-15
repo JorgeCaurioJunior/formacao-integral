@@ -428,29 +428,11 @@
 
   <div class="section-title">Leituras do Dia</div>
 
-  <a id="linkUniversalis" href="#" target="_blank" class="link-card">
-    <span class="lc-icon">📖</span>
+  <a href="https://apps.apple.com/br/app/pocket-ter%C3%A7o-ter%C3%A7o-de-bolso/id460726832" target="_blank" class="link-card">
+    <span class="lc-icon">📿</span>
     <div class="lc-body">
-      <div class="lc-title">Universalis — Missa do Dia</div>
-      <div class="lc-sub">Leituras completas em português</div>
-    </div>
-    <span class="lc-arrow">›</span>
-  </a>
-
-  <a id="linkCancaoNova" href="https://liturgia.cancao.org.br/liturgia-diaria/" target="_blank" class="link-card">
-    <span class="lc-icon">✝️</span>
-    <div class="lc-body">
-      <div class="lc-title">Canção Nova — Liturgia Diária</div>
-      <div class="lc-sub">CNBB · Rito Romano · Missal 2026</div>
-    </div>
-    <span class="lc-arrow">›</span>
-  </a>
-
-  <a href="https://apps.apple.com/br/app/magnificat/id395601501" target="_blank" class="link-card">
-    <span class="lc-icon">🙏</span>
-    <div class="lc-body">
-      <div class="lc-title">Magnificat (App Store)</div>
-      <div class="lc-sub">Missário completo · Liturgia das Horas</div>
+      <div class="lc-title">Pocket Terço</div>
+      <div class="lc-sub">Abrir app · Terço de bolso</div>
     </div>
     <span class="lc-arrow">›</span>
   </a>
@@ -663,9 +645,6 @@ function initDate() {
   document.getElementById('litSeason').innerHTML =
     `<span class="lit-season" style="background:${s.bg};color:${s.color}">${s.name}</span>`;
 
-  // Universalis link
-  const ds = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
-  document.getElementById('linkUniversalis').href = `https://universalis.com/brazil/${ds}/Mass.htm`;
 }
 
 // ════════════════════════════════════════════════
