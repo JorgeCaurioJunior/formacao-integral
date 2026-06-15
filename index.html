@@ -447,6 +447,22 @@
     </button>
   </div>
 
+  <div class="card" style="border-left: 4px solid var(--gold); background: #fffdf5;">
+    <div style="text-align:center; margin-bottom: 14px;">
+      <span style="font-size:22px;">✠</span>
+    </div>
+    <div style="text-align:center; font-size:13px; font-weight:800; letter-spacing:1px; color:var(--gold); text-transform:uppercase; margin-bottom:14px;">
+      Ave, ó São José
+    </div>
+    <p style="font-size:15px; line-height:1.75; color:var(--text); margin-bottom:14px;">
+      Ave, ó São José, homem justo, esposo virginal de Maria, e pai davídico do Messias; bendito és tu entre os homens, e bendito é o filho de Deus que a ti foi confiado: Jesus.
+    </p>
+    <p style="font-size:15px; line-height:1.75; color:var(--text); margin-bottom:14px;">
+      São José, Padroeiro da Igreja universal, guarda as nossas famílias na paz e na graça divina, e socorre-nos na hora da nossa morte.
+    </p>
+    <p style="text-align:center; font-size:15px; font-weight:700; color:var(--navy);">Amém</p>
+  </div>
+
 </div>
 
 <!-- ════════════════════════════════════════════════
@@ -976,19 +992,3 @@ let _toastTimer;
 function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
-}
-
-// ════════════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════════════
-initDate();
-buildWkGrid();
-renderPrayer();
-renderWkHistory();
-renderReading();
-</script>
-</body>
-</html>
