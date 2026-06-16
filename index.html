@@ -1,994 +1,768 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Formação Integral">
-  <meta name="theme-color" content="#002855">
-  <link rel="apple-touch-icon" href="icon.png">
-  <title>Formação Integral</title>
-  <style>
-    :root {
-      --navy:   #002855;
-      --forest: #006432;
-      --gold:   #B48C28;
-      --brown:  #6E4B32;
-      --red:    #8B1A1A;
-      --bg:     #f2f2f7;
-      --white:  #ffffff;
-      --text:   #1c1c1e;
-      --muted:  #8e8e93;
-      --border: #d1d1d6;
-      --card-shadow: 0 1px 3px rgba(0,0,0,0.10);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Formacao Integral">
+<meta name="theme-color" content="#002855">
+<title>Formacao Integral</title>
+<style>
+:root {
+  --navy:   #002855;
+  --forest: #006432;
+  --gold:   #B48C28;
+  --brown:  #6E4B32;
+  --bg:     #f2f2f7;
+  --white:  #ffffff;
+  --text:   #1c1c1e;
+  --muted:  #8e8e93;
+  --border: #d1d1d6;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+/* HEADER */
+.header {
+  background: var(--navy);
+  color: white;
+  padding: 50px 20px 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header h1 { font-size: 20px; font-weight: 700; }
+.header .sub { font-size: 13px; opacity: 0.7; margin-top: 2px; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      max-width: 430px;
-      margin: 0 auto;
-      min-height: 100dvh;
-      padding-bottom: 84px;
-    }
+/* BOTTOM NAV */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 4px 6px;
+  border: none;
+  background: transparent;
+  font-size: 10px;
+  color: var(--muted);
+  gap: 2px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.nav-btn.active { color: var(--navy); }
+.nav-btn .ico { font-size: 24px; line-height: 1; }
 
-    /* ── HEADER ─────────────────────────────────── */
-    .header {
-      background: var(--navy);
-      color: white;
-      padding: 52px 20px 14px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
-    .header .subtitle { font-size: 13px; opacity: 0.7; margin-top: 2px; }
+/* TABS */
+.tab { display: none; padding: 16px; }
+.tab.active { display: block; }
 
-    /* ── BOTTOM NAV ──────────────────────────────── */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 430px;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-top: 1px solid var(--border);
-      display: flex;
-      padding-bottom: env(safe-area-inset-bottom);
-      z-index: 100;
-    }
-    .nav-btn {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 8px 4px 6px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      font-size: 10px;
-      color: var(--muted);
-      gap: 2px;
-      font-weight: 500;
-    }
-    .nav-btn.active { color: var(--navy); }
-    .nav-btn .ico { font-size: 24px; line-height: 1; }
+/* CARD */
+.card {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.09);
+}
+.card-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
 
-    /* ── TABS ────────────────────────────────────── */
-    .tab { display: none; padding: 16px 16px 0; }
-    .tab.active { display: block; }
+/* SECTION TITLE */
+.sec { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); margin: 20px 0 8px 4px; }
 
-    /* ── CARD ────────────────────────────────────── */
-    .card {
-      background: var(--white);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: var(--card-shadow);
-    }
-    .card-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
+/* BUTTONS */
+.btn { display: block; width: 100%; padding: 13px; border-radius: 12px; border: none; font-size: 15px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; }
+.btn:active { opacity: 0.75; }
+.btn-navy   { background: var(--navy);   color: white; }
+.btn-forest { background: var(--forest); color: white; }
+.btn-gold   { background: var(--gold);   color: white; }
+.btn-sm     { padding: 9px 14px; font-size: 14px; border-radius: 10px; }
 
-    /* ── BUTTONS ─────────────────────────────────── */
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 13px 20px;
-      border-radius: 12px;
-      border: none;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      transition: opacity 0.15s;
-    }
-    .btn:active { opacity: 0.75; }
-    .btn-navy   { background: var(--navy); color: white; }
-    .btn-forest { background: var(--forest); color: white; }
-    .btn-gold   { background: var(--gold); color: white; }
-    .btn-ghost  { background: var(--bg); color: var(--navy); }
-    .btn-sm     { padding: 9px 16px; font-size: 14px; border-radius: 10px; }
-    .btn-row    { display: flex; gap: 8px; }
-    .btn-row .btn { flex: 1; }
+/* INPUTS */
+.field { margin-bottom: 12px; }
+.field label { font-size: 13px; font-weight: 500; color: var(--muted); display: block; margin-bottom: 5px; }
+input, select, textarea {
+  width: 100%; padding: 11px 13px;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  font-size: 15px; color: var(--text); background: var(--white);
+  -webkit-appearance: none;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--navy); }
+textarea { resize: none; height: 72px; }
 
-    /* ── INPUTS ──────────────────────────────────── */
-    .field { margin-bottom: 12px; }
-    .field label { font-size: 13px; font-weight: 500; color: var(--muted); display: block; margin-bottom: 5px; }
-    input[type=text], input[type=number], select, textarea {
-      width: 100%;
-      padding: 11px 13px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      font-size: 15px;
-      color: var(--text);
-      background: var(--white);
-      -webkit-appearance: none;
-    }
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--navy);
-    }
-    textarea { resize: none; height: 72px; }
+/* LINK CARD */
+.lcard {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; background: white; border-radius: 12px;
+  text-decoration: none; color: var(--text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.09); margin-bottom: 10px;
+}
+.lcard:active { opacity: 0.7; }
+.lcard .li { font-size: 28px; }
+.lcard .lb { flex: 1; }
+.lcard .lt { font-weight: 600; font-size: 15px; }
+.lcard .ls { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.lcard .la { font-size: 20px; color: var(--muted); }
 
-    /* ── SECTION TITLE ───────────────────────────── */
-    .section-title {
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: var(--muted);
-      margin: 20px 0 8px 4px;
-    }
+/* LITURGY HERO */
+.lit-hero { text-align: center; padding: 20px 0 8px; }
+.lit-day  { font-size: 30px; font-weight: 700; color: var(--navy); }
+.lit-date { font-size: 14px; color: var(--muted); margin-top: 3px; }
+.lit-seas { display: inline-block; margin-top: 10px; padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; }
 
-    /* ── LITURGY ─────────────────────────────────── */
-    .lit-hero {
-      text-align: center;
-      padding: 20px 0 8px;
-    }
-    .lit-dayname { font-size: 30px; font-weight: 700; color: var(--navy); }
-    .lit-date    { font-size: 14px; color: var(--muted); margin-top: 3px; }
-    .lit-season  {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 4px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-    }
+/* CALENDAR */
+.cal-hdr  { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.cal-nav  { background: var(--bg); border: none; width: 34px; height: 34px; border-radius: 50%; font-size: 22px; cursor: pointer; color: var(--navy); display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.cal-lbl  { font-size: 15px; font-weight: 700; text-transform: capitalize; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.cal-hd   { text-align: center; font-size: 10px; font-weight: 700; color: var(--muted); padding: 4px 0 6px; }
+.cal-d    { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 13px; font-weight: 500; border: 2px solid transparent; cursor: pointer; -webkit-user-select: none; user-select: none; }
+.cal-d.empty  { cursor: default; }
+.cal-d.future { color: var(--border); cursor: default; }
+.cal-d.today  { border-color: var(--navy); color: var(--navy); font-weight: 800; }
+.cal-d.prayed { background: var(--forest); color: white; border-color: var(--forest); }
+.cal-d.prayed.today { background: var(--navy); border-color: var(--navy); }
 
-    .link-card {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      background: white;
-      border-radius: 12px;
-      text-decoration: none;
-      color: var(--text);
-      box-shadow: var(--card-shadow);
-      margin-bottom: 10px;
-    }
-    .link-card:active { opacity: 0.7; }
-    .link-card .lc-icon { font-size: 28px; }
-    .link-card .lc-body { flex: 1; }
-    .link-card .lc-title { font-weight: 600; font-size: 15px; }
-    .link-card .lc-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .link-card .lc-arrow { font-size: 18px; color: var(--muted); }
+/* WORKOUT SELECTOR */
+.wk-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; margin-bottom: 14px; }
+.wk-btn  { display: flex; flex-direction: column; align-items: center; padding: 8px 3px; border-radius: 10px; border: 2px solid var(--border); background: white; cursor: pointer; font-size: 10px; font-weight: 600; color: var(--muted); text-align: center; line-height: 1.3; }
+.wk-btn .wk-l { font-size: 18px; font-weight: 800; color: var(--navy); line-height: 1.2; }
+.wk-btn.active { border-color: var(--navy); background: var(--navy); color: white; }
+.wk-btn.active .wk-l { color: white; }
 
-    /* ── CALENDAR ────────────────────────────────── */
-    .cal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .cal-nav-btn {
-      background: var(--bg);
-      border: none;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      font-size: 22px;
-      cursor: pointer;
-      color: var(--navy);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      line-height: 1;
-    }
-    .cal-month-label {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      text-transform: capitalize;
-      text-align: center;
-    }
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 3px;
-    }
-    .cal-head {
-      text-align: center;
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--muted);
-      padding: 4px 0 6px;
-      text-transform: uppercase;
-    }
-    .cal-day {
-      aspect-ratio: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text);
-      cursor: pointer;
-      border: 2px solid transparent;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    .cal-day.empty  { cursor: default; }
-    .cal-day.future { color: var(--border); cursor: default; }
-    .cal-day.today  { border-color: var(--navy); color: var(--navy); font-weight: 800; }
-    .cal-day.prayed { background: var(--forest); color: white; border-color: var(--forest); }
-    .cal-day.prayed.today { background: var(--navy); border-color: var(--navy); }
+/* EXERCISE */
+.ex-card { border: 1.5px solid var(--border); border-radius: 12px; padding: 13px; margin-bottom: 10px; }
+.ex-name { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+.ex-tgt  { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+.sets-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.set-cell { display: flex; align-items: center; gap: 5px; }
+.set-cell label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.set-cell input { width: 58px; padding: 7px 8px; text-align: center; margin: 0; }
 
-    /* ── WORKOUT ─────────────────────────────────── */
-    .workout-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 7px;
-      margin-bottom: 14px;
-    }
-    .wk-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 8px 3px;
-      border-radius: 10px;
-      border: 2px solid var(--border);
-      background: white;
-      cursor: pointer;
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--muted);
-      line-height: 1.3;
-      text-align: center;
-    }
-    .wk-btn .wk-letter { font-size: 18px; font-weight: 800; color: var(--navy); line-height: 1.2; }
-    .wk-btn.active { border-color: var(--navy); background: var(--navy); }
-    .wk-btn.active .wk-letter, .wk-btn.active { color: white; }
+/* WARMUP */
+.wm-step { display: flex; align-items: center; gap: 10px; font-size: 13px; margin-bottom: 7px; }
+.wm-n { width: 24px; height: 24px; border-radius: 50%; background: var(--navy); color: white; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-    .exercise-card {
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 13px;
-      margin-bottom: 10px;
-    }
-    .ex-name { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
-    .ex-target { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
-    .sets-row { display: flex; gap: 8px; flex-wrap: wrap; }
-    .set-cell { display: flex; align-items: center; gap: 5px; }
-    .set-cell label { font-size: 12px; color: var(--muted); font-weight: 500; white-space: nowrap; }
-    .set-cell input { width: 58px; padding: 7px 8px; text-align: center; font-size: 14px; margin: 0; }
+/* HISTORY */
+.hist-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 11px 0; border-bottom: 1px solid var(--border); }
+.hist-item:last-child { border-bottom: none; }
+.hist-t { font-weight: 600; font-size: 14px; }
+.hist-m { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.badge  { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 20px; background: var(--bg); color: var(--navy); white-space: nowrap; flex-shrink: 0; margin-left: 8px; }
 
-    /* ── HISTORY LIST ────────────────────────────── */
-    .hist-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 11px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .hist-item:last-child { border-bottom: none; }
-    .hist-title { font-weight: 600; font-size: 14px; }
-    .hist-meta  { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .badge {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 20px;
-      background: var(--bg);
-      color: var(--navy);
-      white-space: nowrap;
-      flex-shrink: 0;
-      margin-left: 8px;
-    }
+/* BOOKS */
+.book-row { display: flex; gap: 13px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.book-row:last-child { border-bottom: none; }
+.book-spine { width: 42px; min-height: 62px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: white; font-size: 8px; font-weight: 700; text-align: center; padding: 4px; writing-mode: vertical-lr; flex-shrink: 0; }
+.book-info  { flex: 1; min-width: 0; }
+.book-t     { font-weight: 600; font-size: 14px; }
+.book-a     { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.book-s     { font-size: 12px; font-weight: 600; margin-top: 5px; }
+.prog-bar   { background: var(--border); border-radius: 3px; height: 5px; margin: 6px 0 3px; }
+.prog-fill  { height: 5px; border-radius: 3px; }
 
-    /* ── READING ─────────────────────────────────── */
-    .book-row {
-      display: flex;
-      gap: 13px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .book-row:last-child { border-bottom: none; }
-    .book-spine {
-      width: 42px;
-      min-height: 62px;
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 8px;
-      font-weight: 700;
-      text-align: center;
-      padding: 4px;
-      writing-mode: vertical-lr;
-      text-orientation: mixed;
-      flex-shrink: 0;
-      letter-spacing: 0.5px;
-    }
-    .book-info { flex: 1; min-width: 0; }
-    .book-title  { font-weight: 600; font-size: 14px; line-height: 1.3; }
-    .book-author { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .book-status { font-size: 12px; font-weight: 600; margin-top: 5px; }
-    .prog-bar { background: var(--border); border-radius: 3px; height: 5px; margin: 6px 0 3px; }
-    .prog-fill { height: 5px; border-radius: 3px; transition: width 0.4s; }
+/* MODAL */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; display: none; align-items: flex-end; }
+.overlay.open { display: flex; }
+.modal { background: var(--bg); border-radius: 20px 20px 0 0; padding: 20px; width: 100%; max-height: 88vh; overflow-y: auto; }
+.modal-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.modal-hd h2 { font-size: 18px; font-weight: 700; }
+.modal-x { background: var(--border); border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 16px; cursor: pointer; color: var(--muted); }
 
-    /* ── MODAL ───────────────────────────────────── */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 200;
-      display: none;
-      align-items: flex-end;
-    }
-    .overlay.open { display: flex; }
-    .modal {
-      background: var(--bg);
-      border-radius: 20px 20px 0 0;
-      padding: 20px 20px calc(20px + env(safe-area-inset-bottom));
-      width: 100%;
-      max-height: 88dvh;
-      overflow-y: auto;
-    }
-    .modal-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-    .modal-head h2 { font-size: 18px; font-weight: 700; }
-    .modal-close {
-      background: var(--border);
-      border: none;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-    }
+/* EMPTY */
+.empty { text-align: center; padding: 30px 16px; color: var(--muted); }
+.empty .ei { font-size: 36px; margin-bottom: 10px; }
+.empty p { font-size: 14px; }
 
-    /* ── EMPTY STATE ─────────────────────────────── */
-    .empty {
-      text-align: center;
-      padding: 30px 16px;
-      color: var(--muted);
-    }
-    .empty .ei { font-size: 36px; margin-bottom: 10px; }
-    .empty p { font-size: 14px; }
-
-    /* ── TOAST ───────────────────────────────────── */
-    .toast {
-      position: fixed;
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: rgba(30,30,30,0.92);
-      color: white;
-      padding: 10px 22px;
-      border-radius: 22px;
-      font-size: 14px;
-      font-weight: 500;
-      z-index: 500;
-      opacity: 0;
-      transition: opacity 0.25s, transform 0.25s;
-      white-space: nowrap;
-      backdrop-filter: blur(8px);
-    }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-    /* ── WARMUP ──────────────────────────────────── */
-    .warmup-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .warmup-step {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-    }
-    .warmup-step .ws-num {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--navy);
-      color: white;
-      font-size: 11px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-  </style>
+/* TOAST */
+.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px); background: rgba(30,30,30,0.92); color: white; padding: 10px 22px; border-radius: 22px; font-size: 14px; font-weight: 500; z-index: 500; opacity: 0; transition: opacity 0.25s, transform 0.25s; white-space: nowrap; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
-  <h1>Formação Integral</h1>
-  <div class="subtitle" id="hdrDate"></div>
+  <h1>Formacao Integral</h1>
+  <div class="sub" id="hdrDate"></div>
 </div>
 
-<!-- ════════════════════════════════════════════════
-     TAB: LITURGIA
-═════════════════════════════════════════════════ -->
+<!-- TAB: LITURGIA -->
 <div class="tab active" id="tab-lit">
 
   <div class="lit-hero">
-    <div class="lit-dayname" id="litDay"></div>
-    <div class="lit-date"   id="litDate"></div>
+    <div class="lit-day"  id="litDay"></div>
+    <div class="lit-date" id="litDate"></div>
     <div id="litSeason"></div>
   </div>
 
-  <div class="section-title">Leituras do Dia</div>
+  <div class="sec">Liturgia</div>
 
-  <a href="https://apps.apple.com/br/app/pocket-ter%C3%A7o-ter%C3%A7o-de-bolso/id460726832" target="_blank" class="link-card">
-    <span class="lc-icon">📿</span>
-    <div class="lc-body">
-      <div class="lc-title">Pocket Terço</div>
-      <div class="lc-sub">Abrir app · Terço de bolso</div>
-    </div>
-    <span class="lc-arrow">›</span>
+  <a id="linkUniversalis" href="#" target="_blank" class="lcard">
+    <span class="li">&#128214;</span>
+    <div class="lb"><div class="lt">Universalis - Missa do Dia</div><div class="ls">Leituras em portugues</div></div>
+    <span class="la">&#8250;</span>
   </a>
 
-  <div class="section-title">Oração Matinal</div>
+  <a href="https://apps.apple.com/br/app/pocket-ter%C3%A7o-ter%C3%A7o-de-bolso/id460726832" target="_blank" class="lcard">
+    <span class="li">&#128214;</span>
+    <div class="lb"><div class="lt">Pocket Terco</div><div class="ls">Abrir app no iPhone</div></div>
+    <span class="la">&#8250;</span>
+  </a>
+
+  <div class="sec">Oracao Matinal</div>
 
   <div class="card">
-    <div class="cal-header">
-      <button class="cal-nav-btn" onclick="calPrev()">‹</button>
-      <div class="cal-month-label" id="calMonthLabel"></div>
-      <button class="cal-nav-btn" onclick="calNext()">›</button>
+    <div class="cal-hdr">
+      <button class="cal-nav" id="btnCalPrev">&#8249;</button>
+      <div class="cal-lbl" id="calLbl"></div>
+      <button class="cal-nav" id="btnCalNext">&#8250;</button>
     </div>
     <div class="cal-grid" id="calGrid"></div>
-    <button class="btn btn-navy" style="margin-top:14px;" onclick="logPrayer()">
-      ✝️ Registrar Oração de Hoje
-    </button>
+    <button class="btn btn-navy" id="btnLogPrayer" style="margin-top:14px;">Registrar Oracao de Hoje</button>
   </div>
 
-  <div class="card" style="border-left: 4px solid var(--gold); background: #fffdf5;">
-    <div style="text-align:center; margin-bottom: 14px;">
-      <span style="font-size:22px;">✠</span>
-    </div>
-    <div style="text-align:center; font-size:13px; font-weight:800; letter-spacing:1px; color:var(--gold); text-transform:uppercase; margin-bottom:14px;">
-      Ave, ó São José
-    </div>
-    <p style="font-size:15px; line-height:1.75; color:var(--text); margin-bottom:14px;">
-      Ave, ó São José, homem justo, esposo virginal de Maria, e pai davídico do Messias; bendito és tu entre os homens, e bendito é o filho de Deus que a ti foi confiado: Jesus.
-    </p>
-    <p style="font-size:15px; line-height:1.75; color:var(--text); margin-bottom:14px;">
-      São José, Padroeiro da Igreja universal, guarda as nossas famílias na paz e na graça divina, e socorre-nos na hora da nossa morte.
-    </p>
-    <p style="text-align:center; font-size:15px; font-weight:700; color:var(--navy);">Amém</p>
+  <div class="card" style="border-left:4px solid #B48C28; background:#fffdf5;">
+    <div style="text-align:center;margin-bottom:14px;font-size:20px;">+</div>
+    <div style="text-align:center;font-size:13px;font-weight:800;letter-spacing:1px;color:#B48C28;text-transform:uppercase;margin-bottom:14px;">Ave, o Sao Jose</div>
+    <p style="font-size:15px;line-height:1.75;color:#1c1c1e;margin-bottom:14px;">Ave, o Sao Jose, homem justo, esposo virginal de Maria, e pai davidico do Messias; bendito es tu entre os homens, e bendito e o filho de Deus que a ti foi confiado: Jesus.</p>
+    <p style="font-size:15px;line-height:1.75;color:#1c1c1e;margin-bottom:14px;">Sao Jose, Padroeiro da Igreja universal, guarda as nossas familias na paz e na graca divina, e socorre-nos na hora da nossa morte.</p>
+    <p style="text-align:center;font-size:15px;font-weight:700;color:#002855;">Amem</p>
   </div>
 
 </div>
 
-<!-- ════════════════════════════════════════════════
-     TAB: TREINO
-═════════════════════════════════════════════════ -->
+<!-- TAB: TREINO -->
 <div class="tab" id="tab-treino">
 
-  <div class="section-title">Selecionar Treino</div>
+  <div class="sec">Selecionar Treino</div>
   <div class="card">
-    <div class="workout-grid" id="wkGrid"></div>
-    <div id="wkDayHint" style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:2px;"></div>
+    <div class="wk-grid" id="wkGrid"></div>
+    <div id="wkHint" style="font-size:12px;color:var(--muted);text-align:center;"></div>
   </div>
 
   <div id="wkForm" style="display:none;">
     <div class="card">
-      <div class="card-label">Aquecimento obrigatório — 5 min</div>
-      <div class="warmup-steps">
-        <div class="warmup-step"><span class="ws-num">1</span>Polichinelo — 1 min (ritmo constante)</div>
-        <div class="warmup-step"><span class="ws-num">2</span>Rotações — 1 min (ombros 30s + quadril 30s)</div>
-        <div class="warmup-step"><span class="ws-num">3</span>Agachamento lento — 10 reps (3s descer/subir)</div>
-        <div class="warmup-step"><span class="ws-num">4</span>Flexão preparatória — 5 reps ultra-lentas</div>
-        <div class="warmup-step"><span class="ws-num">5</span>Corrida estacionária — 1 min</div>
-      </div>
+      <div class="card-label">Aquecimento - 5 min obrigatorio</div>
+      <div class="wm-step"><span class="wm-n">1</span>Polichinelo - 1 min</div>
+      <div class="wm-step"><span class="wm-n">2</span>Rotacoes - 1 min (ombros 30s + quadril 30s)</div>
+      <div class="wm-step"><span class="wm-n">3</span>Agachamento lento - 10 reps (3s descer/subir)</div>
+      <div class="wm-step"><span class="wm-n">4</span>Flexao preparatoria - 5 reps ultra-lentas</div>
+      <div class="wm-step"><span class="wm-n">5</span>Corrida estacionaria - 1 min</div>
     </div>
-
     <div id="exList"></div>
-
     <div class="field">
-      <label>Observações do treino (opcional)</label>
-      <textarea id="wkNote" placeholder="Ex: Cansado mas consistente. Flexão archer melhorou."></textarea>
+      <label>Observacoes (opcional)</label>
+      <textarea id="wkNote" placeholder="Ex: Cansado mas consistente. Flexao archer melhorou."></textarea>
     </div>
-
-    <button class="btn btn-forest" onclick="saveWorkout()">💪 Salvar Treino</button>
+    <button class="btn btn-forest" id="btnSaveWk">Salvar Treino</button>
     <div style="height:12px;"></div>
   </div>
 
-  <div class="section-title">Histórico</div>
+  <div class="sec">Historico</div>
   <div class="card" id="wkHistory"></div>
 
 </div>
 
-<!-- ════════════════════════════════════════════════
-     TAB: LEITURAS
-═════════════════════════════════════════════════ -->
+<!-- TAB: LEITURAS -->
 <div class="tab" id="tab-leit">
 
-  <div id="activeBooksSection"></div>
+  <div id="activeBooksArea"></div>
 
-  <div class="section-title">Adicionar Livro</div>
+  <div class="sec">Adicionar Livro</div>
   <div class="card">
-    <button class="btn btn-gold" onclick="openModal('addBookModal')">+ Novo Livro</button>
+    <button class="btn btn-gold" id="btnOpenAddBook">+ Novo Livro</button>
   </div>
 
-  <div class="section-title">Sessões Recentes</div>
+  <div class="sec">Sessoes Recentes</div>
   <div class="card" id="sessHistory"></div>
 
-  <div class="section-title">Biblioteca</div>
+  <div class="sec">Biblioteca</div>
   <div class="card" id="library"></div>
 
 </div>
 
-<!-- ════════════════════════════════════════════════
-     BOTTOM NAV
-═════════════════════════════════════════════════ -->
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-  <button class="nav-btn active" onclick="goTab('lit',this)">
-    <span class="ico">✝️</span><span>Liturgia</span>
+  <button class="nav-btn active" data-tab="lit">
+    <span class="ico">+</span><span>Liturgia</span>
   </button>
-  <button class="nav-btn" onclick="goTab('treino',this)">
-    <span class="ico">💪</span><span>Treino</span>
+  <button class="nav-btn" data-tab="treino">
+    <span class="ico">&#128170;</span><span>Treino</span>
   </button>
-  <button class="nav-btn" onclick="goTab('leit',this)">
-    <span class="ico">📚</span><span>Leituras</span>
+  <button class="nav-btn" data-tab="leit">
+    <span class="ico">&#128218;</span><span>Leituras</span>
   </button>
 </nav>
 
-<!-- ════════════════════════════════════════════════
-     MODAL: ADD BOOK
-═════════════════════════════════════════════════ -->
+<!-- MODAL: ADD BOOK -->
 <div class="overlay" id="addBookModal">
   <div class="modal">
-    <div class="modal-head">
+    <div class="modal-hd">
       <h2>Novo Livro</h2>
-      <button class="modal-close" onclick="closeModal('addBookModal')">✕</button>
+      <button class="modal-x" id="btnCloseAddBook">X</button>
     </div>
-
-    <div class="field">
-      <label>Título *</label>
-      <input id="bTitle" type="text" placeholder="Ex: Mundos Mortos">
-    </div>
-    <div class="field">
-      <label>Autor *</label>
-      <input id="bAuthor" type="text" placeholder="Ex: Octavio de Faria">
-    </div>
-    <div class="field">
-      <label>Categoria</label>
+    <div class="field"><label>Titulo *</label><input id="bTitle" type="text" placeholder="Ex: Mundos Mortos"></div>
+    <div class="field"><label>Autor *</label><input id="bAuthor" type="text" placeholder="Ex: Octavio de Faria"></div>
+    <div class="field"><label>Categoria</label>
       <select id="bCat">
-        <option value="lit">Literário</option>
+        <option value="lit">Literario</option>
         <option value="rel">Religioso / Espiritual</option>
-        <option value="ac">Acadêmico</option>
+        <option value="ac">Academico</option>
         <option value="out">Outro</option>
       </select>
     </div>
-    <div class="field">
-      <label>Total de Páginas</label>
-      <input id="bPages" type="number" placeholder="Ex: 320">
-    </div>
-    <div class="field">
-      <label>Página Inicial (onde já estou)</label>
-      <input id="bCurr" type="number" placeholder="0" value="0">
-    </div>
-    <button class="btn btn-navy" onclick="addBook()">Salvar</button>
+    <div class="field"><label>Total de Paginas</label><input id="bPages" type="number" placeholder="Ex: 320"></div>
+    <div class="field"><label>Pagina Atual</label><input id="bCurr" type="number" placeholder="0" value="0"></div>
+    <button class="btn btn-navy" id="btnAddBook">Salvar</button>
   </div>
 </div>
 
-<!-- MODAL: LOG READING (generated dynamically) -->
+<!-- MODAL: LOG READING -->
 <div class="overlay" id="logReadModal">
   <div class="modal">
-    <div class="modal-head">
+    <div class="modal-hd">
       <h2>Registrar Leitura</h2>
-      <button class="modal-close" onclick="closeModal('logReadModal')">✕</button>
+      <button class="modal-x" id="btnCloseLogRead">X</button>
     </div>
     <div id="logReadBody"></div>
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ════════════════════════════════════════════════
-// STORAGE
-// ════════════════════════════════════════════════
-const S = {
-  get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
-  set: (k, v) => localStorage.setItem(k, JSON.stringify(v)),
+// ── STORAGE ──────────────────────────────────────
+var S = {
+  get: function(k, d) { try { var v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : d; } catch(e) { return d; } },
+  set: function(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
 };
 
-// ════════════════════════════════════════════════
-// DATE / LITURGY
-// ════════════════════════════════════════════════
-const DIAS  = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
-const MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-const SDIAS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+// ── DATES ─────────────────────────────────────────
+var DIAS  = ['Domingo','Segunda-feira','Terca-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sabado'];
+var MESES = ['janeiro','fevereiro','marco','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 
 function todayKey() {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  var d = new Date();
+  return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
 }
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
+// ── LITURGICAL SEASON ─────────────────────────────
 function easter(y) {
-  const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,
-        f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),
-        h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,
-        l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),
-        mo=Math.floor((h+l-7*m+114)/31)-1,
-        dy=((h+l-7*m+114)%31)+1;
+  var a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,
+      f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),
+      h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,
+      l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),
+      mo=Math.floor((h+l-7*m+114)/31)-1,
+      dy=((h+l-7*m+114)%31)+1;
   return new Date(y,mo,dy);
 }
-
+function doy(d) { return Math.round((d - new Date(d.getFullYear(),0,1)) / 86400000) + 1; }
 function liturgicalSeason(date) {
-  const y = date.getFullYear();
-  const e = easter(y);
-  const doy = n => Math.round((n - new Date(n.getFullYear(),0,1)) / 86400000) + 1;
-  const d = doy(date), ed = doy(e);
-  const ash = ed - 46, pent = ed + 49;
-  // Advent: 4th Sunday before Dec 25
-  const xmas = new Date(y,11,25);
-  const adventStart = new Date(y,11,25 - (xmas.getDay()||7) - 21);
-  const advDay = doy(adventStart);
-
-  if (d < advDay && d >= doy(new Date(y,10,27))) {
-    // Check if current year's advent hasn't started, look at prev year
-  }
-  if (d >= advDay || d < doy(new Date(y,0,7))) {
-    return { name:'Advento', bg:'#ede7f6', color:'#4a148c' };
-  }
-  if (d < doy(new Date(y,0,13))) {
-    return { name:'Natal', bg:'#fff8e1', color:'#e65100' };
-  }
-  if (d < ash) return { name:'Tempo Comum', bg:'#e8f5e9', color:'#1b5e20' };
-  if (d < ed)  return { name:'Quaresma',    bg:'#f3e5f5', color:'#6a1b9a' };
-  if (d <= pent) return { name:'Tempo Pascal', bg:'#fff9c4', color:'#f57f17' };
+  var y = date.getFullYear(), e = easter(y);
+  var dd = doy(date), ed = doy(e), ash = ed-46, pent = ed+49;
+  var xmas = new Date(y,11,25), advDay = doy(new Date(y,11,25-(xmas.getDay()||7)-21));
+  if (dd >= advDay) return { name:'Advento', bg:'#ede7f6', color:'#4a148c' };
+  if (dd < 13)      return { name:'Natal', bg:'#fff8e1', color:'#e65100' };
+  if (dd < ash)     return { name:'Tempo Comum', bg:'#e8f5e9', color:'#1b5e20' };
+  if (dd < ed)      return { name:'Quaresma', bg:'#f3e5f5', color:'#6a1b9a' };
+  if (dd <= pent)   return { name:'Tempo Pascal', bg:'#fff9c4', color:'#b3860b' };
   return { name:'Tempo Comum', bg:'#e8f5e9', color:'#1b5e20' };
 }
 
+// ── INIT DATE ─────────────────────────────────────
 function initDate() {
-  const now = new Date();
-  document.getElementById('hdrDate').textContent =
-    `${DIAS[now.getDay()]}, ${now.getDate()} de ${MESES[now.getMonth()]} de ${now.getFullYear()}`;
+  var now = new Date();
+  document.getElementById('hdrDate').textContent = DIAS[now.getDay()] + ', ' + now.getDate() + ' de ' + MESES[now.getMonth()] + ' de ' + now.getFullYear();
   document.getElementById('litDay').textContent  = DIAS[now.getDay()];
-  document.getElementById('litDate').textContent =
-    `${now.getDate()} de ${MESES[now.getMonth()]} de ${now.getFullYear()}`;
-
-  const s = liturgicalSeason(now);
-  document.getElementById('litSeason').innerHTML =
-    `<span class="lit-season" style="background:${s.bg};color:${s.color}">${s.name}</span>`;
-
+  document.getElementById('litDate').textContent = now.getDate() + ' de ' + MESES[now.getMonth()] + ' de ' + now.getFullYear();
+  var s = liturgicalSeason(now);
+  document.getElementById('litSeason').innerHTML = '<span class="lit-seas" style="background:' + s.bg + ';color:' + s.color + '">' + s.name + '</span>';
+  var ds = now.getFullYear() + '' + pad(now.getMonth()+1) + '' + pad(now.getDate());
+  document.getElementById('linkUniversalis').href = 'https://universalis.com/brazil/' + ds + '/Mass.htm';
 }
 
-// ════════════════════════════════════════════════
-// TABS
-// ════════════════════════════════════════════════
-function goTab(name, btn) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  btn.classList.add('active');
-}
+// ── TABS ──────────────────────────────────────────
+document.querySelectorAll('.nav-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var name = this.getAttribute('data-tab');
+    document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.getElementById('tab-' + name).classList.add('active');
+    this.classList.add('active');
+  });
+});
 
-// ════════════════════════════════════════════════
-// PRAYER TRACKER
-// ════════════════════════════════════════════════
-let calYear  = new Date().getFullYear();
-let calMonth = new Date().getMonth();
+// ── CALENDAR ──────────────────────────────────────
+var calYear  = new Date().getFullYear();
+var calMonth = new Date().getMonth();
 
 function renderCalendar() {
-  const prayers  = S.get('prayers', {});
-  const now      = new Date();
-  const todayStr = todayKey();
-
-  // Cabeçalho do mês
-  const label = new Date(calYear, calMonth, 1)
-    .toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
-  document.getElementById('calMonthLabel').textContent =
-    label.charAt(0).toUpperCase() + label.slice(1);
-
-  const grid = document.getElementById('calGrid');
-  grid.innerHTML = '';
-
-  // Cabeçalhos dos dias
-  ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'].forEach(d => {
-    const el = document.createElement('div');
-    el.className = 'cal-head';
-    el.textContent = d;
-    grid.appendChild(el);
-  });
-
-  // Células vazias antes do primeiro dia
-  const firstDay  = new Date(calYear, calMonth, 1).getDay();
-  const totalDays = new Date(calYear, calMonth + 1, 0).getDate();
-  for (let i = 0; i < firstDay; i++) {
-    const el = document.createElement('div');
-    el.className = 'cal-day empty';
-    grid.appendChild(el);
-  }
-
-  // Dias do mês
-  for (let d = 1; d <= totalDays; d++) {
-    const key     = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isToday  = key === todayStr;
-    const isFuture = new Date(calYear, calMonth, d) > now && !isToday;
-    const isPrayed = !!prayers[key];
-
-    const el = document.createElement('div');
-    el.className = 'cal-day'
-      + (isFuture ? ' future' : '')
-      + (isToday  ? ' today'  : '')
-      + (isPrayed ? ' prayed' : '');
-    el.textContent = d;
-    if (!isFuture) el.onclick = () => togglePrayer(key);
-    grid.appendChild(el);
-  }
+  try {
+    var prayers = S.get('prayers', {});
+    var now = new Date();
+    var todayStr = todayKey();
+    var label = new Date(calYear, calMonth, 1).toLocaleDateString('pt-BR', { month:'long', year:'numeric' });
+    document.getElementById('calLbl').textContent = label.charAt(0).toUpperCase() + label.slice(1);
+    var grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+    var heads = ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
+    for (var h = 0; h < 7; h++) {
+      var hd = document.createElement('div'); hd.className = 'cal-hd'; hd.textContent = heads[h]; grid.appendChild(hd);
+    }
+    var firstDay  = new Date(calYear, calMonth, 1).getDay();
+    var totalDays = new Date(calYear, calMonth+1, 0).getDate();
+    for (var i = 0; i < firstDay; i++) {
+      var em = document.createElement('div'); em.className = 'cal-d empty'; grid.appendChild(em);
+    }
+    for (var d = 1; d <= totalDays; d++) {
+      (function(day) {
+        var key      = calYear + '-' + pad(calMonth+1) + '-' + pad(day);
+        var isToday  = key === todayStr;
+        var isFuture = (new Date(calYear, calMonth, day) > now) && !isToday;
+        var isPrayed = !!prayers[key];
+        var el = document.createElement('div');
+        var cls = 'cal-d';
+        if (isFuture) cls += ' future';
+        if (isToday)  cls += ' today';
+        if (isPrayed) cls += ' prayed';
+        el.className = cls;
+        el.textContent = day;
+        if (!isFuture) {
+          el.addEventListener('click', function() { togglePrayer(key); });
+        }
+        grid.appendChild(el);
+      })(d);
+    }
+  } catch(e) {}
 }
 
 function togglePrayer(key) {
-  const prayers = S.get('prayers', {});
-  if (prayers[key]) { delete prayers[key]; toast('Registro removido'); }
-  else              { prayers[key] = true;  toast('Oração registrada ✝️'); }
+  var prayers = S.get('prayers', {});
+  if (prayers[key]) { delete prayers[key]; showToast('Registro removido'); }
+  else              { prayers[key] = true;  showToast('Oracao registrada'); }
   S.set('prayers', prayers);
   renderCalendar();
 }
 
-function logPrayer() {
-  const prayers = S.get('prayers', {});
+document.getElementById('btnLogPrayer').addEventListener('click', function() {
+  var prayers = S.get('prayers', {});
   prayers[todayKey()] = true;
   S.set('prayers', prayers);
   renderCalendar();
-  toast('Oração de hoje registrada ✝️');
-}
+  showToast('Oracao de hoje registrada');
+});
 
-function calPrev() {
-  calMonth--;
-  if (calMonth < 0) { calMonth = 11; calYear--; }
-  renderCalendar();
-}
-
-function calNext() {
-  const now = new Date();
+document.getElementById('btnCalPrev').addEventListener('click', function() {
+  calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar();
+});
+document.getElementById('btnCalNext').addEventListener('click', function() {
+  var now = new Date();
   if (calYear === now.getFullYear() && calMonth === now.getMonth()) return;
-  calMonth++;
-  if (calMonth > 11) { calMonth = 0; calYear++; }
-  renderCalendar();
-}
+  calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar();
+});
 
-// ════════════════════════════════════════════════
-// WORKOUT DATA
-// ════════════════════════════════════════════════
-const WK = {
-  A: { name:'Peito / Tríceps', day:'Terça', exercises:[
-    {n:'Flexão Tradicional',           sets:4, t:'15-20 reps'},
-    {n:'Flexão Fechada (Tríceps)',      sets:3, t:'12-15 reps'},
-    {n:'Flexão Declinada',             sets:3, t:'10-12 reps'},
-    {n:'Flexão Archer (unilateral)',    sets:3, t:'6-8 cada lado'},
-    {n:'Mergulho entre Cadeiras',      sets:4, t:'12-15 reps'},
+// ── WORKOUTS ──────────────────────────────────────
+var WK = {
+  A: { name:'Peito / Triceps', day:'Terca', exercises:[
+    {n:'Flexao Tradicional',          sets:4, t:'15-20 reps'},
+    {n:'Flexao Fechada (Triceps)',     sets:3, t:'12-15 reps'},
+    {n:'Flexao Declinada',            sets:3, t:'10-12 reps'},
+    {n:'Flexao Archer (unilateral)',  sets:3, t:'6-8 cada lado'},
+    {n:'Mergulho entre Cadeiras',     sets:4, t:'12-15 reps'}
   ]},
-  B: { name:'Costas / Bíceps', day:'Quarta', exercises:[
-    {n:'Remada com Mochila',           sets:4, t:'12 cada lado'},
-    {n:'Superman',                     sets:4, t:'15 reps'},
-    {n:'Flexão Invertida (mesa)',       sets:4, t:'10-12 reps'},
-    {n:'Curl de Bíceps com Mochila',   sets:3, t:'12 reps'},
-    {n:'Good Morning',                 sets:3, t:'15 reps'},
+  B: { name:'Costas / Biceps', day:'Quarta', exercises:[
+    {n:'Remada com Mochila',          sets:4, t:'12 cada lado'},
+    {n:'Superman',                    sets:4, t:'15 reps'},
+    {n:'Flexao Invertida (mesa)',     sets:4, t:'10-12 reps'},
+    {n:'Curl de Biceps com Mochila', sets:3, t:'12 reps'},
+    {n:'Good Morning',               sets:3, t:'15 reps'}
   ]},
   C: { name:'Pernas', day:'Quinta', exercises:[
-    {n:'Agachamento Livre',            sets:4, t:'20 reps'},
-    {n:'Agachamento Búlgaro',          sets:4, t:'12 cada perna'},
-    {n:'Avanço Caminhando',            sets:3, t:'12 cada perna'},
-    {n:'Elevação de Quadril',          sets:4, t:'20 reps'},
-    {n:'Panturrilha no Degrau',        sets:4, t:'20 reps'},
-    {n:'Agachamento Sumô',             sets:3, t:'15 reps'},
+    {n:'Agachamento Livre',          sets:4, t:'20 reps'},
+    {n:'Agachamento Bulgaro',        sets:4, t:'12 cada perna'},
+    {n:'Avanco Caminhando',          sets:3, t:'12 cada perna'},
+    {n:'Elevacao de Quadril',        sets:4, t:'20 reps'},
+    {n:'Panturrilha no Degrau',      sets:4, t:'20 reps'},
+    {n:'Agachamento Sumo',           sets:3, t:'15 reps'}
   ]},
   D: { name:'Ombros / Core', day:'Sexta', exercises:[
-    {n:'Flexão Pike',                  sets:4, t:'10-12 reps'},
-    {n:'Elevação Lateral c/ Mochila',  sets:3, t:'15 cada lado'},
-    {n:'Flexão c/ Toque no Ombro',     sets:3, t:'10-12 reps'},
-    {n:'Prancha Frontal',              sets:4, t:'45-60 seg'},
-    {n:'Abdominal Crunch',             sets:4, t:'20 reps'},
-    {n:'Escalador (Mountain Climber)', sets:3, t:'30 seg'},
-    {n:'Elevação de Pernas',           sets:3, t:'15 reps'},
+    {n:'Flexao Pike',                 sets:4, t:'10-12 reps'},
+    {n:'Elevacao Lateral c/ Mochila',sets:3, t:'15 cada lado'},
+    {n:'Flexao c/ Toque no Ombro',   sets:3, t:'10-12 reps'},
+    {n:'Prancha Frontal',            sets:4, t:'45-60 seg'},
+    {n:'Abdominal Crunch',           sets:4, t:'20 reps'},
+    {n:'Escalador',                  sets:3, t:'30 seg'},
+    {n:'Elevacao de Pernas',         sets:3, t:'15 reps'}
   ]},
-  E: { name:'Corpo Inteiro (Circuito)', day:'Domingo', exercises:[
-    {n:'Flexão Tradicional',           sets:4, t:'15 reps'},
-    {n:'Agachamento Livre',            sets:4, t:'20 reps'},
-    {n:'Mergulho entre Cadeiras',      sets:4, t:'12 reps'},
-    {n:'Prancha Frontal',              sets:4, t:'45 seg'},
-    {n:'Remada com Mochila',           sets:4, t:'10 cada lado'},
-    {n:'Agachamento Búlgaro',          sets:4, t:'10 cada perna'},
-    {n:'Abdominal Crunch',             sets:4, t:'20 reps'},
-    {n:'Corrida Estacionária',         sets:4, t:'30 seg'},
-  ]},
+  E: { name:'Corpo Inteiro', day:'Domingo', exercises:[
+    {n:'Flexao Tradicional',         sets:4, t:'15 reps'},
+    {n:'Agachamento Livre',          sets:4, t:'20 reps'},
+    {n:'Mergulho entre Cadeiras',    sets:4, t:'12 reps'},
+    {n:'Prancha Frontal',            sets:4, t:'45 seg'},
+    {n:'Remada com Mochila',         sets:4, t:'10 cada lado'},
+    {n:'Agachamento Bulgaro',        sets:4, t:'10 cada perna'},
+    {n:'Abdominal Crunch',           sets:4, t:'20 reps'},
+    {n:'Corrida Estacionaria',       sets:4, t:'30 seg'}
+  ]}
 };
 
-// ════════════════════════════════════════════════
-// WORKOUT UI
-// ════════════════════════════════════════════════
-let selWk = null;
+var selWk = null;
 
 function buildWkGrid() {
-  const g = document.getElementById('wkGrid');
-  g.innerHTML = Object.entries(WK).map(([k,w]) =>
-    `<button class="wk-btn" id="wkb${k}" onclick="selectWk('${k}')">
-       <span class="wk-letter">${k}</span>
-       <span>${w.name.replace(' / ','\n').split('\n')[0]}</span>
-     </button>`
-  ).join('');
+  var g = document.getElementById('wkGrid');
+  g.innerHTML = '';
+  var keys = ['A','B','C','D','E'];
+  var labels = [['A','Peito','Triceps'],['B','Costas','Biceps'],['C','Pernas',''],['D','Ombros','Core'],['E','Corpo','Inteiro']];
+  for (var i = 0; i < keys.length; i++) {
+    (function(k, lbl) {
+      var btn = document.createElement('button');
+      btn.className = 'wk-btn';
+      btn.id = 'wkb' + k;
+      btn.innerHTML = '<span class="wk-l">' + lbl[0] + '</span><span>' + lbl[1] + '</span>' + (lbl[2] ? '<span>' + lbl[2] + '</span>' : '');
+      btn.addEventListener('click', function() { selectWk(k); });
+      g.appendChild(btn);
+    })(keys[i], labels[i]);
+  }
 }
 
 function selectWk(k) {
   selWk = k;
-  document.querySelectorAll('.wk-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('wkb' + k).classList.add('active');
-  document.getElementById('wkDayHint').textContent = `Treino ${k} — ${WK[k].name} · ${WK[k].day}`;
+  document.querySelectorAll('.wk-btn').forEach(function(b) { b.classList.remove('active'); });
+  var btn = document.getElementById('wkb' + k);
+  if (btn) btn.classList.add('active');
+  document.getElementById('wkHint').textContent = 'Treino ' + k + ' - ' + WK[k].name + ' - ' + WK[k].day;
   document.getElementById('wkNote').value = '';
   renderExForm(k);
   document.getElementById('wkForm').style.display = 'block';
-  document.getElementById('wkForm').scrollIntoView({behavior:'smooth', block:'start'});
 }
 
 function renderExForm(k) {
-  const w = WK[k];
-  document.getElementById('exList').innerHTML = w.exercises.map((ex, i) => `
-    <div class="exercise-card">
-      <div class="ex-name">${ex.n}</div>
-      <div class="ex-target">Meta: ${ex.t}</div>
-      <div class="sets-row">
-        ${Array.from({length:ex.sets},(_,s)=>`
-          <div class="set-cell">
-            <label>S${s+1}</label>
-            <input type="number" id="ex${i}s${s}" placeholder="—" min="0">
-          </div>`).join('')}
-      </div>
-    </div>`).join('');
+  var w = WK[k], html = '';
+  for (var i = 0; i < w.exercises.length; i++) {
+    var ex = w.exercises[i], setsHtml = '';
+    for (var s = 0; s < ex.sets; s++) {
+      setsHtml += '<div class="set-cell"><label>S' + (s+1) + '</label><input type="number" id="ex' + i + 's' + s + '" placeholder="-" min="0"></div>';
+    }
+    html += '<div class="ex-card"><div class="ex-name">' + ex.n + '</div><div class="ex-tgt">Meta: ' + ex.t + '</div><div class="sets-row">' + setsHtml + '</div></div>';
+  }
+  document.getElementById('exList').innerHTML = html;
 }
 
-function saveWorkout() {
+document.getElementById('btnSaveWk').addEventListener('click', function() {
   if (!selWk) return;
-  const w = WK[selWk];
-  const exData = w.exercises.map((ex,i)=>({
-    name: ex.n,
-    sets: Array.from({length:ex.sets},(_,s)=>parseInt(document.getElementById(`ex${i}s${s}`)?.value)||0)
-  }));
-  const totalReps = exData.reduce((a,ex)=>a+ex.sets.reduce((b,r)=>b+r,0),0);
-  const entry = {
-    id: Date.now(),
-    date: new Date().toISOString(),
-    wk: selWk,
-    name: w.name,
-    exercises: exData,
-    totalReps,
-    note: document.getElementById('wkNote').value,
-  };
-  const hist = S.get('workouts', []);
+  var w = WK[selWk], exData = [];
+  for (var i = 0; i < w.exercises.length; i++) {
+    var sets = [];
+    for (var s = 0; s < w.exercises[i].sets; s++) {
+      var inp = document.getElementById('ex' + i + 's' + s);
+      sets.push(inp ? (parseInt(inp.value) || 0) : 0);
+    }
+    exData.push({ name: w.exercises[i].n, sets: sets });
+  }
+  var totalReps = 0;
+  for (var i = 0; i < exData.length; i++) for (var s = 0; s < exData[i].sets.length; s++) totalReps += exData[i].sets[s];
+  var entry = { id: Date.now(), date: new Date().toISOString(), wk: selWk, name: w.name, exercises: exData, totalReps: totalReps, note: document.getElementById('wkNote').value };
+  var hist = S.get('workouts', []);
   hist.unshift(entry);
   S.set('workouts', hist);
   document.getElementById('wkForm').style.display = 'none';
-  document.querySelectorAll('.wk-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('wkDayHint').textContent = '';
+  document.querySelectorAll('.wk-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('wkHint').textContent = '';
   selWk = null;
   renderWkHistory();
-  toast('Treino salvo! 💪');
-}
+  showToast('Treino salvo!');
+});
 
 function renderWkHistory() {
-  const hist = S.get('workouts', []);
-  const el = document.getElementById('wkHistory');
-  if (!hist.length) { el.innerHTML = `<div class="empty"><div class="ei">💪</div><p>Nenhum treino registrado ainda.</p></div>`; return; }
-  el.innerHTML = hist.slice(0,15).map(e => {
-    const d = new Date(e.date);
-    const ds = `${d.getDate()}/${d.getMonth()+1} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-    return `<div class="hist-item">
-      <div>
-        <div class="hist-title">Treino ${e.wk} — ${e.name}</div>
-        <div class="hist-meta">${ds} · ${e.totalReps} reps totais${e.note?' · '+e.note.substring(0,35)+'…':''}</div>
-      </div>
-      <span class="badge">${e.wk}</span>
-    </div>`;
-  }).join('');
+  var hist = S.get('workouts', []);
+  var el = document.getElementById('wkHistory');
+  if (!hist.length) { el.innerHTML = '<div class="empty"><div class="ei">&#128170;</div><p>Nenhum treino registrado ainda.</p></div>'; return; }
+  var html = '';
+  var slice = hist.slice(0, 15);
+  for (var i = 0; i < slice.length; i++) {
+    var e = slice[i], d = new Date(e.date);
+    var ds = d.getDate() + '/' + (d.getMonth()+1) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+    html += '<div class="hist-item"><div><div class="hist-t">Treino ' + e.wk + ' - ' + e.name + '</div><div class="hist-m">' + ds + ' - ' + e.totalReps + ' reps' + (e.note ? ' - ' + e.note.substring(0,35) : '') + '</div></div><span class="badge">' + e.wk + '</span></div>';
+  }
+  el.innerHTML = html;
 }
 
-// ════════════════════════════════════════════════
-// READING TRACKER
-// ════════════════════════════════════════════════
-const CAT_COLOR = { lit:'var(--navy)', rel:'var(--forest)', ac:'var(--brown)', out:'var(--muted)' };
-const CAT_LABEL = { lit:'Literário', rel:'Espiritual', ac:'Acadêmico', out:'Outro' };
+// ── READING TRACKER ───────────────────────────────
+var CAT_COLOR = { lit:'#002855', rel:'#006432', ac:'#6E4B32', out:'#8e8e93' };
+var CAT_LABEL = { lit:'Literario', rel:'Espiritual', ac:'Academico', out:'Outro' };
+
+document.getElementById('btnOpenAddBook').addEventListener('click', function() { openModal('addBookModal'); });
+document.getElementById('btnCloseAddBook').addEventListener('click', function() { closeModal('addBookModal'); });
+document.getElementById('btnCloseLogRead').addEventListener('click', function() { closeModal('logReadModal'); });
+document.getElementById('btnAddBook').addEventListener('click', addBook);
+
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.overlay').forEach(function(o) {
+  o.addEventListener('click', function(e) { if (e.target === o) closeModal(o.id); });
+});
 
 function addBook() {
-  const title = document.getElementById('bTitle').value.trim();
-  const author = document.getElementById('bAuthor').value.trim();
-  if (!title || !author) { toast('Preencha título e autor'); return; }
-  const book = {
-    id: Date.now(),
-    title, author,
+  var title  = document.getElementById('bTitle').value.trim();
+  var author = document.getElementById('bAuthor').value.trim();
+  if (!title || !author) { showToast('Preencha titulo e autor'); return; }
+  var book = {
+    id: Date.now(), title: title, author: author,
     cat: document.getElementById('bCat').value,
     totalPages: parseInt(document.getElementById('bPages').value) || 0,
     currentPage: parseInt(document.getElementById('bCurr').value) || 0,
-    status: 'reading',
-    startDate: new Date().toISOString(),
-    finishedDate: null,
+    status: 'reading', startDate: new Date().toISOString(), finishedDate: null
   };
-  const books = S.get('books', []);
+  var books = S.get('books', []);
   books.push(book);
   S.set('books', books);
   closeModal('addBookModal');
-  ['bTitle','bAuthor','bPages','bCurr'].forEach(id => document.getElementById(id).value = '');
+  ['bTitle','bAuthor','bPages','bCurr'].forEach(function(id) { document.getElementById(id).value = ''; });
   renderReading();
-  toast('Livro adicionado 📚');
+  showToast('Livro adicionado!');
 }
 
 function openLogRead(bookId) {
-  const books = S.get('books', []);
-  const book = books.find(b => b.id === bookId);
+  var books = S.get('books', []);
+  var book = null;
+  for (var i = 0; i < books.length; i++) { if (books[i].id === bookId) { book = books[i]; break; } }
   if (!book) return;
-  document.getElementById('logReadBody').innerHTML = `
-    <div class="field">
-      <label style="font-size:14px;font-weight:700;color:var(--text)">${book.title}</label>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:12px">${book.author} · Pág. atual: ${book.currentPage}${book.totalPages?' / '+book.totalPages:''}</div>
-      <label>Até qual página li hoje? *</label>
-      <input type="number" id="lr_page" placeholder="${book.currentPage + 10}" min="${book.currentPage + 1}">
-    </div>
-    <div class="field">
-      <label>Notas / Reflexão (opcional)</label>
-      <textarea id="lr_note" placeholder="Trecho marcante, pensamento, dúvida..."></textarea>
-    </div>
-    <button class="btn btn-navy" onclick="saveSession(${bookId})">Salvar Sessão</button>
-  `;
+  document.getElementById('logReadBody').innerHTML =
+    '<div class="field"><label style="font-size:14px;font-weight:700;color:#1c1c1e">' + book.title + '</label>' +
+    '<div style="font-size:12px;color:#8e8e93;margin-bottom:12px">' + book.author + ' - Pag. atual: ' + book.currentPage + (book.totalPages ? ' / ' + book.totalPages : '') + '</div>' +
+    '<label>Ate qual pagina li hoje? *</label>' +
+    '<input type="number" id="lr_page" placeholder="' + (book.currentPage+10) + '" min="' + (book.currentPage+1) + '"></div>' +
+    '<div class="field"><label>Notas / Reflexao (opcional)</label>' +
+    '<textarea id="lr_note" placeholder="Trecho marcante, pensamento, duvida..."></textarea></div>' +
+    '<button class="btn btn-navy" id="btnSaveSession">Salvar Sessao</button>';
   openModal('logReadModal');
+  document.getElementById('btnSaveSession').addEventListener('click', function() { saveSession(bookId); });
 }
 
 function saveSession(bookId) {
-  const pageVal = parseInt(document.getElementById('lr_page')?.value);
-  const note    = document.getElementById('lr_note')?.value || '';
-  const books   = S.get('books', []);
-  const book    = books.find(b => b.id === bookId);
-  if (!book || isNaN(pageVal) || pageVal <= book.currentPage) { toast('Página inválida'); return; }
-  const pagesRead = pageVal - book.currentPage;
-  book.currentPage = pageVal;
-  if (book.totalPages && pageVal >= book.totalPages) {
-    book.status = 'finished';
-    book.finishedDate = new Date().toISOString();
-  }
+  var pageVal = parseInt(document.getElementById('lr_page').value);
+  var note    = document.getElementById('lr_note').value || '';
+  var books   = S.get('books', []);
+  var book = null, idx = -1;
+  for (var i = 0; i < books.length; i++) { if (books[i].id === bookId) { book = books[i]; idx = i; break; } }
+  if (!book || isNaN(pageVal) || pageVal <= book.currentPage) { showToast('Pagina invalida'); return; }
+  var pagesRead = pageVal - book.currentPage;
+  books[idx].currentPage = pageVal;
+  if (book.totalPages && pageVal >= book.totalPages) { books[idx].status = 'finished'; books[idx].finishedDate = new Date().toISOString(); }
   S.set('books', books);
-  const sessions = S.get('sessions', []);
+  var sessions = S.get('sessions', []);
+  sessions.unshift({ id: Date.now(), bookId: bookId, title: book.title, date: new Date().toISOString(), pagesRead: pagesRead, endPage: pageVal, note: note });
+  S.set('sessions', sessions);
+  closeModal('logReadModal');
+  renderReading();
+  showToast('+' + pagesRead + ' paginas lidas!');
+}
+
+function renderReading() {
+  var books    = S.get('books', []);
+  var sessions = S.get('sessions', []);
+  var reading  = [];
+  for (var i = 0; i < books.length; i++) { if (books[i].status === 'reading') reading.push(books[i]); }
+
+  // Active books
+  var aEl = document.getElementById('activeBooksArea');
+  if (!reading.length) {
+    aEl.innerHTML = '<div class="sec">Em Leitura</div><div class="card"><div class="empty"><div class="ei">&#128218;</div><p>Nenhum livro ativo.</p></div></div>';
+  } else {
+    var html = '<div class="sec">Em Leitura</div>';
+    for (var i = 0; i < reading.length; i++) {
+      var b = reading[i];
+      var pct = b.totalPages ? Math.round(b.currentPage / b.totalPages * 100) : null;
+      var col = CAT_COLOR[b.cat] || '#002855';
+      var progHtml = pct !== null
+        ? '<div class="prog-bar"><div class="prog-fill" style="width:' + pct + '%;background:' + col + '"></div></div><div style="font-size:11px;color:#8e8e93">Pag. ' + b.currentPage + ' / ' + b.totalPages + ' (' + pct + '%)</div>'
+        : '<div style="font-size:11px;color:#8e8e93">Pag. atual: ' + b.currentPage + '</div>';
+      html += '<div class="card"><div class="book-row" style="border:none;padding:0;margin-bottom:12px;">' +
+        '<div class="book-spine" style="background:' + col + '">' + b.title.substring(0,14) + '</div>' +
+        '<div class="book-info"><div class="book-t">' + b.title + '</div><div class="book-a">' + b.author + '</div>' +
+        '<div class="book-s" style="color:' + col + '">' + (CAT_LABEL[b.cat]||'Outro') + '</div>' + progHtml + '</div></div>' +
+        '<button class="btn btn-sm btn-navy" data-bookid="' + b.id + '">Registrar Leitura de Hoje</button></div>';
+    }
+    aEl.innerHTML = html;
+    aEl.querySelectorAll('[data-bookid]').forEach(function(btn) {
+      btn.addEventListener('click', function() { openLogRead(parseInt(this.getAttribute('data-bookid'))); });
+    });
+  }
+
+  // Sessions
+  var sEl = document.getElementById('sessHistory');
+  if (!sessions.length) { sEl.innerHTML = '<div class="empty"><div class="ei">&#128218;</div><p>Nenhuma sessao registrada ainda.</p></div>'; }
+  else {
+    var html = '';
+    var slice = sessions.slice(0, 12);
+    for (var i = 0; i < slice.length; i++) {
+      var s = slice[i], d = new Date(s.date);
+      html += '<div class="hist-item"><div><div class="hist-t">' + s.title + '</div><div class="hist-m">' + d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear() + ' - ate pag. ' + s.endPage + (s.note ? ' - "' + s.note.substring(0,35) + '"' : '') + '</div></div><span class="badge">+' + s.pagesRead + 'p</span></div>';
+    }
+    sEl.innerHTML = html;
+  }
+
+  // Library
+  var lEl = document.getElementById('library');
+  if (!books.length) { lEl.innerHTML = '<div class="empty"><div class="ei">&#127963;</div><p>Biblioteca vazia.</p></div>'; }
+  else {
+    var html = '';
+    for (var i = 0; i < books.length; i++) {
+      var b = books[i], col = CAT_COLOR[b.cat] || '#002855';
+      var sc = b.status === 'finished' ? '#B48C28' : col;
+      var sl = b.status === 'finished' ? 'Concluido' : 'Lendo';
+      var pp = b.totalPages ? '<div style="font-size:11px;color:#8e8e93">' + Math.round(b.currentPage/b.totalPages*100) + '% - ' + b.currentPage + '/' + b.totalPages + ' pag.</div>' : '';
+      html += '<div class="book-row"><div class="book-spine" style="background:' + col + '">' + b.title.substring(0,14) + '</div><div class="book-info"><div class="book-t">' + b.title + '</div><div class="book-a">' + b.author + '</div><div class="book-s" style="color:' + sc + '">' + sl + '</div>' + pp + '</div></div>';
+    }
+    lEl.innerHTML = html;
+  }
+}
+
+// ── TOAST ─────────────────────────────────────────
+var _tt;
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(_tt);
+  _tt = setTimeout(function() { t.classList.remove('show'); }, 2600);
+}
+
+// ── INIT ──────────────────────────────────────────
+initDate();
+buildWkGrid();
+renderCalendar();
+renderWkHistory();
+renderReading();
+</script>
+</body>
+</html>
